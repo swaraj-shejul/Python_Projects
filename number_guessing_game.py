@@ -32,9 +32,6 @@ while True:
         if player_turn in selected_numbers.values():
             keys = [k for k, v in selected_numbers.items() if v == player_turn]
             print("player has won: " + ", ".join(keys))
-            break
-        else:
-            continue
-    break
+            exit() 
 
 
