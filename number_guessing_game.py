@@ -1,27 +1,40 @@
 #number guessing game
 import getpass # this module allows us to hide the input of the user, so that the other player cannot see the number that is being entered.
 
-player1 = input("Player 1, please enter your name: ")
-player2 = input("Player 2, please enter your name: ")
+number_of_players = int(input("Enter the number of players more than one : "))
+count= []
+selected_numbers = {}
 
-print("Welcome to the number guessing game, " + player1 + " and " + player2 + "!")
+# this loop is used to get the names of the players and store them in a list called count. 
+# The number of players is determined by the user input at the beginning of the program.
+# The names of the players are then used to prompt them to enter their selected numbers, 
+# which are stored in a dictionary called selected_numbers with the player's name as the key and the selected number as the value.
 
-player1_number = int(getpass.getpass(player1 +"Enter number between 1 and 20: ")) 
-player2_number = int(getpass.getpass(player2 +"Enter number between 1 and 20: "))
+for i in range(number_of_players):
+    name = input(f"Enter player{i+1} name: ")
+    count.append(name)
 
-def check_winner(num1, num2):
-    while True:
-        player1_turn = int(input(f"{player1}, guess a number :"))
-        if player1_turn == num2:
-            print(player2 + " wins!" + "you cuted the number of " + player2 + " is " + str(num2))
+
+print("Welcome to the number guessing game, " + ", ".join(count) + "!")
+
+# this loop is used to get the selected numbers from each player and store them in the selected_numbers dictionary. 
+# The getpass.getpass() function is used to hide the input of the user, so that the other player cannot see the number that is being entered.
+
+for i in count:
+    number = int(getpass.getpass(i +"Enter number between 1 and 20: "))
+    selected_numbers[i] = number
+
+# this loop is used to allow each player to take turns guessing the numbers selected by the other players.
+
+while True:
+    for i in count:
+        player_turn = int(input(f"{i}, guess a number :"))
+        if player_turn in selected_numbers.values():
+            keys = [k for k, v in selected_numbers.items() if v == player_turn]
+            print("player has won: " + ", ".join(keys))
             break
         else:
-            player2_turn = int(input(f"{player2}, guess a number :"))
-            if player2_turn == num1:
-                print(player1 + " wins!" + "you cuted the number of " + player1 + " is " + str(num1))
-                break
-
-check_winner(player1_number, player2_number)
-
+            continue
+    break
 
 
